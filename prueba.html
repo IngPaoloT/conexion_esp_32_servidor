@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Dashboard de prueba en servidor local</title>
+</head>
+<body>
+<h1>Aquí se realizará la obtención de datos en tiempo real.</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <div class="card">
+                <div class="card-body">
+                    Dato recolectado: <strong><span id="dato_actual">0</span></strong>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-sm">
+            <div class="card">
+                <div class="card-body">
+                    Temperatura: <strong> <span id="tem_actual">0.00</span> °C</strong>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-sm">
+            <div class="card">
+                <div class="card-body">
+                    Humedad: <strong> <span id="hum_actual">0.00</span> %</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+<script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous">
+</script>
+
+<script 
+
+    type="text/javascript">
+    window.setInterval(function () {
+        actualizaDatos(); //Se realiza el llamado de la función actualizaDatos()
+    }, 2000);
+
+    function actualizaDatos() {
+        actDatoActual();
+        actTempHum();
+    }
+
+    //Función para actualizar el dato que se ha recibido
+    function actDatoActual() {
+        jQuery.get(
+            'dato_actualizado.php',
+            function (data) {
+                $('#dato_actual').text(data);
+            }
+        );
+    }
+
+    //Función para actualizar datos de temperatura y humedad
+    function actTempHum() {
+        jQuery.get(
+            'obtener_tem_hum.php',
+            {valor:"temp"},
+            function (dato) {
+                $('#tem_actual').text(dato);
+            }
+        );
+
+        jQuery.get(
+            'obtener_tem_hum.php',
+            {valor:"hum"},
+            function (dato) {
+                $('#hum_actual').text(dato);
+            }
+        );
+    }
+</script>
