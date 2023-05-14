@@ -2,52 +2,51 @@
 #include <HTTPClient.h>
 
 //Credenciales para la red wifi
-const char* ssid = "Bolognesa";
-const char* password = "0804169194";
+const char* ssid = "NombreDelaRed";
+const char* password = "ContraseñaDeLaRed";
 
-// Domain Name with full URL Path for HTTP POST Request
-const char* serverName = "http://192.168.100.6/esp_post.php";
+// Dirección del posteo por HTTP a la base de datos del servidor de la universidad o a ThingSpeak
+const char* serverName = "http://192.168.4.146/directorio_Archivos";
 
-// Service API Key
-//String apiKey = "8FWNUSPZB93PNQH1";
+// Clave del servicio API
+//String apiKey = "claveDeThingSepak";
 
 float valor1 = 0.0, valor2=0.0;
 
 void setup() {
-  // put your setup code here, to run once:
   Serial.begin(9600);
   WiFi.begin(ssid, password);
   delay(5000);
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-    
+  //Se valida conexión a WiFi    
   if(WiFi.status()== WL_CONNECTED){
       WiFiClient client;
       HTTPClient http; 
-      // Your Domain name with URL path or IP address with path
+      // Se establece el inicio del cliente HTTP para posteo de información.
       http.begin(client, serverName);    
-      // Specify content-type header
+      // Se especifica el encabezao content-type (en este caso por XML)
       http.addHeader("Content-Type", "application/x-www-form-urlencoded");    
-      // Data to send with HTTP POST
+      //Información a enviar al servidor
       String httpRequestData = "tem=" + (String)random(100)+"&hum="+(String)random(100);          
-      // Send HTTP POST request
+      // Se envía solicitud HTTP POST
       int httpResponseCode = http.POST(httpRequestData);
-      Serial.print("HTTP Response code: ");
+      Serial.print("Código de respuesta HTTP: ");
       Serial.println(httpResponseCode);  
 
+    //Esta validación es para verificar que hubo conexión correcta con el servidor y nos arroja lo que envíe como respuesta.
       if (httpResponseCode==200){
         String cuerpo_respuesta = http.getString();
         Serial.println("El servidor respondió: ");
         Serial.println(cuerpo_respuesta);
       }   
-      // Free resources
+      // Se liberan recursos del cliente HTTP
       http.end();
     }
     else {
-      Serial.println("WiFi Disconnected...");
+      Serial.println("WiFi Desconectado..."); //Si Wifi se desconecta nos arroja este mensaje
     }
 
-    delay(40000);
+    delay(10000); //Intervalo de envío entre mediciones de los sensores.
 }
