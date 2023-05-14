@@ -6,16 +6,16 @@
 
     if($con){
 
-        $query = "select * from datos order by id desc limit 1;";
+        $query = "query de consulta de la tabla elegida en la base de datos";
         $res = $con->query($query);
     }
 
     while($fila = $res->fetch_array()){
-        $tem = $fila["tem"];
-        $hum = $fila["hum"];
+        $tem = $fila["variable1"];
+        $hum = $fila["variable2"];
     }
     
-    if($_GET["valor"]=="temp"){
+    if($_GET["valor"]=="variable1"){
         echo $tem;
     }
     
