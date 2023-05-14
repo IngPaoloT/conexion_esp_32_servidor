@@ -12,7 +12,10 @@ Este archivo documenta la conexión a la base de datos del servidor de la Univer
 Este archivo le permite enlazar los datos obtenidos de los sensores a la base de datos.
 
 # obtener_tem_hum.php
-Se extrae la información necesaria de la tabla de la base de datos
+Se extrae la información necesaria de la tabla de la base de datos (humedad y temperatura).
+
+# Archivo dato_actualizado.pho
+Se extrae el ID incremental para saber en cual dato leído va el dashboard actualmente.
 
 # Archivo prueba.html
 En este pequeño Dashboard se podrá visualizar los datos que provienen de las tablas (los sensores).
