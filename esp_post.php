@@ -5,17 +5,17 @@ include 'conexion.php';
 if($con){
 	echo "Conexión con base de datos exitosa...";
 	
-	if(isset($_POST['tem'])){
+	if(isset($_POST['variable1'])){
 		
-		$tem = $_POST['tem'];
+		$tem = $_POST['variable1'];
 		echo "Temperatura: ".$tem;
 	}
 		
-	if(isset($_POST['hum'])){
-		$hum = $_POST['hum'];
+	if(isset($_POST['variable2'])){
+		$hum = $_POST['variable2'];
 		echo "Humedad: ".$hum;
 		
-		$consulta = "INSERT INTO datos(tem,hum) VALUES ('$tem','$hum')";
+		$consulta = "Query de consulta a la base de datos";
 		$resultado = mysqli_query($con,$consulta);
 		
 		if($resultado){
